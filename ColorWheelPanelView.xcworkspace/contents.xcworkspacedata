@@ -2,9 +2,9 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "group:ColorWheelPanelViewSample/ColorWheelPanelViewSample.xcodeproj">
+      location = "group:">
    </FileRef>
    <FileRef
-      location = "group:ColorWheelPanelView">
+      location = "group:ColorWheelPanelViewSample/ColorWheelPanelViewSample.xcodeproj">
    </FileRef>
 </Workspace>
