@@ -473,7 +473,7 @@ class GraySliderPanelView: NSView {
     }
 }
 
-class ColorWheelPanelView: NSView, ColorWheelViewDelegate {
+public class ColorWheelPanelView: NSView, ColorWheelViewDelegate {
     
     var delegate: ColorPanelViewDelegate?
     
@@ -509,10 +509,6 @@ class ColorWheelPanelView: NSView, ColorWheelViewDelegate {
             sliderBackgroudView.saturation = saturation
             colorWheelView.saturation = saturation
         }
-    }
-    
-    override var wantsDefaultClipping: Bool {
-        return false
     }
     
     @IBAction func didchange(sender: NSSlider) {
