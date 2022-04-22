@@ -8,19 +8,21 @@
 
 /* Begin PBXBuildFile section */
 		14C43A1F2810502B00AE7223 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14C43A1E2810502B00AE7223 /* AppDelegate.swift */; };
-		14C43A212810502B00AE7223 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14C43A202810502B00AE7223 /* ViewController.swift */; };
+		14C43A212810502B00AE7223 /* ColorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14C43A202810502B00AE7223 /* ColorViewController.swift */; };
 		14C43A232810502B00AE7223 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 14C43A222810502B00AE7223 /* Assets.xcassets */; };
 		14C43A262810502B00AE7223 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 14C43A242810502B00AE7223 /* Main.storyboard */; };
 		14C43A2F2810514300AE7223 /* ColorWheelPanelView in Frameworks */ = {isa = PBXBuildFile; productRef = 14C43A2E2810514300AE7223 /* ColorWheelPanelView */; };
+		14E1555F2811104F000EBFAB /* GrayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14E1555E2811104F000EBFAB /* GrayViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		14C43A1B2810502B00AE7223 /* ColorWheelPanelViewSample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ColorWheelPanelViewSample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		14C43A1E2810502B00AE7223 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		14C43A202810502B00AE7223 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		14C43A202810502B00AE7223 /* ColorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorViewController.swift; sourceTree = "<group>"; };
 		14C43A222810502B00AE7223 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		14C43A252810502B00AE7223 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		14C43A272810502B00AE7223 /* ColorWheelPanelViewSample.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = ColorWheelPanelViewSample.entitlements; sourceTree = "<group>"; };
+		14E1555E2811104F000EBFAB /* GrayViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GrayViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -56,7 +58,8 @@
 			isa = PBXGroup;
 			children = (
 				14C43A1E2810502B00AE7223 /* AppDelegate.swift */,
-				14C43A202810502B00AE7223 /* ViewController.swift */,
+				14C43A202810502B00AE7223 /* ColorViewController.swift */,
+				14E1555E2811104F000EBFAB /* GrayViewController.swift */,
 				14C43A222810502B00AE7223 /* Assets.xcassets */,
 				14C43A242810502B00AE7223 /* Main.storyboard */,
 				14C43A272810502B00AE7223 /* ColorWheelPanelViewSample.entitlements */,
@@ -144,7 +147,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				14C43A212810502B00AE7223 /* ViewController.swift in Sources */,
+				14E1555F2811104F000EBFAB /* GrayViewController.swift in Sources */,
+				14C43A212810502B00AE7223 /* ColorViewController.swift in Sources */,
 				14C43A1F2810502B00AE7223 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
