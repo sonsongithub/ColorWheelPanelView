@@ -35,20 +35,23 @@ internal protocol ColorWheelViewDelegate {
 }
 
 internal class ColorWheelView: NSView {
-    
     var delegate: ColorWheelViewDelegate?
     
     let wheelLayer = CALayer()
     let borderLayer = CAShapeLayer()
     
+    // property
     var isContinuous = false
-    
     let scope = NSImageView(image: NSImage(systemSymbolName: "scope", accessibilityDescription: nil)!)
+    let scale: CGFloat = NSScreen.main?.backingScaleFactor ?? 1
     
     func updateContents(hue: Double, saturation: Double, brightness: Double) {
+        // re-draw color wheel
         if wheelLayer.frame.size.width > 0 {
             wheelLayer.contents = createColorWheel(wheelLayer.frame.size, brightness: brightness)
         }
+        
+        // update the location of the scope
         let radius = wheelLayer.frame.width / 2
         let x = cos(hue * Double.pi * 2) * saturation * radius + radius
         let y = sin(hue * Double.pi * 2) * saturation * radius + radius
@@ -56,8 +59,6 @@ internal class ColorWheelView: NSView {
         rect.origin = CGPoint(x: x - rect.size.width/2, y: y - rect.size.height/2)
         self.scope.frame = rect
     }
-    
-    let scale: CGFloat = NSScreen.main!.backingScaleFactor
     
     override init(frame frameRect: NSRect) {
         super.init(frame: frameRect)
@@ -103,7 +104,7 @@ internal class ColorWheelView: NSView {
         }
         
         // If the touch coordinate is close to center, focus it to the very center at set the color to white
-        let whiteThreshold: CGFloat = 10
+        let whiteThreshold: CGFloat = 2
         var isCenter = false
         if (distance < whiteThreshold) {
             outputCoord.x = wheelLayerCenter.x
@@ -113,7 +114,7 @@ internal class ColorWheelView: NSView {
         return (outputCoord, isCenter)
     }
     
-    func update(event: NSEvent, isContinuous: Bool = false) {
+    private func update(event: NSEvent, isContinuous: Bool = false) {
         let point = self.convert(event.locationInWindow, from: event.window?.contentView)
         let indicator = getIndicatorCoordinate(point)
         let point2 = indicator.point
@@ -142,7 +143,7 @@ internal class ColorWheelView: NSView {
         update(event: event, isContinuous: isContinuous)
     }
     
-    func createColorWheel(_ size: CGSize, brightness: Double) -> CGImage {
+    private func createColorWheel(_ size: CGSize, brightness: Double) -> CGImage {
 
         // Creates a bitmap of the Hue Saturation wheel
         let originalWidth: CGFloat = size.width
@@ -193,7 +194,7 @@ internal class ColorWheelView: NSView {
         return imageRef!
     }
     
-    func hueSaturationAtPoint(_ position: CGPoint) -> (hue: CGFloat, saturation: CGFloat) {
+    private func hueSaturationAtPoint(_ position: CGPoint) -> (hue: CGFloat, saturation: CGFloat) {
 
         let c = wheelLayer.frame.width * scale / 2
         let dx = CGFloat(position.x - c) / c

@@ -81,13 +81,20 @@ public class GraySliderPanelView: NSView {
             brightnessSlider.centerYAnchor.constraint(equalTo: sliderBackgroudView.centerYAnchor),
         ])
         
+        // The following parameters read from AppKit.
+        let sliderWidth = Double(228)
+        let sliderHeight = Double(20)
+        let horizontalLeading = Double(8)
+        let heightBackground = Double(14)
+        
         brightnessSlider.addConstraints([
-            brightnessSlider.widthAnchor.constraint(equalToConstant: 228),
-            brightnessSlider.heightAnchor.constraint(equalToConstant: 20)
+            brightnessSlider.widthAnchor.constraint(equalToConstant: sliderWidth),
+            brightnessSlider.heightAnchor.constraint(equalToConstant: sliderHeight)
         ])
+        
         sliderBackgroudView.addConstraints([
-            sliderBackgroudView.widthAnchor.constraint(equalToConstant: 228 - 8),
-            sliderBackgroudView.heightAnchor.constraint(equalToConstant: 14)
+            sliderBackgroudView.widthAnchor.constraint(equalToConstant: sliderWidth - horizontalLeading),
+            sliderBackgroudView.heightAnchor.constraint(equalToConstant: heightBackground)
         ])
 
 //        self.layer?.backgroundColor = NSColor.red.cgColor

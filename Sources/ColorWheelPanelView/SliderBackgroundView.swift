@@ -41,21 +41,21 @@ internal class SliderBackgroundView: NSView {
     }
     
     override func draw(_ dirtyRect: NSRect) {
+        let cornerRadius = Double(4)
+        
+        // gradient color
         let colorStart = NSColor(calibratedHue: hue, saturation: saturation, brightness: 1, alpha: 1)
-        let colorEndA = NSColor(calibratedHue: hue, saturation: saturation, brightness: 0, alpha: 1)
-
-        let gradientA = NSGradient(starting: colorStart, ending: colorEndA)
+        let colorEnd = NSColor(calibratedHue: hue, saturation: saturation, brightness: 0, alpha: 1)
+        let gradient = NSGradient(starting: colorStart, ending: colorEnd)
         
-        
-        let rect2 = self.bounds
-        let rounded = NSBezierPath(roundedRect: rect2, xRadius: 4, yRadius: 4)
-
+        // draw gradient color with clipping
+        let rounded = NSBezierPath(roundedRect: self.bounds, xRadius: cornerRadius, yRadius: cornerRadius)
         rounded.setClip()
-
-        gradientA?.draw(in: rect2, angle: 0)
+        gradient?.draw(in: self.bounds, angle: 0)
         
+         // draw frame
         NSColor.gray.setStroke()
-        let path = NSBezierPath(roundedRect: rect2, xRadius: 4, yRadius: 4)
+        let path = NSBezierPath(roundedRect: self.bounds, xRadius: cornerRadius, yRadius: cornerRadius)
         path.lineWidth = 2
         path.stroke()
     }

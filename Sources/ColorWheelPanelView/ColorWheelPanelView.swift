@@ -32,19 +32,18 @@ public protocol ColorWheelPanelViewDelegate {
 }
 
 public class ColorWheelPanelView: NSView, ColorWheelViewDelegate {
-
     public var delegate: ColorWheelPanelViewDelegate?
+    private let brightnessSlider: NSSlider = NSSlider(frame: .zero)
+    private let colorWheelView = ColorWheelView(frame: .zero)
+    private let sliderBackgroudView = SliderBackgroundView(frame: .zero)
     
+    // properties
     public var isContinuous = false {
         didSet {
             brightnessSlider.isContinuous = isContinuous
             colorWheelView.isContinuous = isContinuous
         }
     }
-    
-    private let brightnessSlider: NSSlider = NSSlider(frame: .zero)
-    private let colorWheelView = ColorWheelView(frame: .zero)
-    private let sliderBackgroudView = SliderBackgroundView(frame: .zero)
     
     public var hue: Double = 0 {
         didSet {
@@ -114,20 +113,27 @@ public class ColorWheelPanelView: NSView, ColorWheelViewDelegate {
             brightnessSlider.centerYAnchor.constraint(equalTo: sliderBackgroudView.centerYAnchor, constant: 0),
         ])
         
+        // The following parameters read from AppKit.
+        let wheelWidth = Double(167)
+        let wheelHeight = Double(167)
+        let sliderWidth = Double(228)
+        let sliderHeight = Double(20)
+        
+        let horizontalLeading = Double(8)
+        let heightBackground = Double(14)
+        
         self.colorWheelView.addConstraints([
-            colorWheelView.widthAnchor.constraint(equalToConstant: 167),
-            colorWheelView.heightAnchor.constraint(equalToConstant: 167)
+            colorWheelView.widthAnchor.constraint(equalToConstant: wheelWidth),
+            colorWheelView.heightAnchor.constraint(equalToConstant: wheelHeight)
         ])
         brightnessSlider.addConstraints([
-            brightnessSlider.widthAnchor.constraint(equalToConstant: 228),
-            brightnessSlider.heightAnchor.constraint(equalToConstant: 20)
+            brightnessSlider.widthAnchor.constraint(equalToConstant: sliderWidth),
+            brightnessSlider.heightAnchor.constraint(equalToConstant: sliderHeight)
         ])
         sliderBackgroudView.addConstraints([
-            sliderBackgroudView.widthAnchor.constraint(equalToConstant: 228 - 8),
-            sliderBackgroudView.heightAnchor.constraint(equalToConstant: 14)
+            sliderBackgroudView.widthAnchor.constraint(equalToConstant: sliderWidth - horizontalLeading),
+            sliderBackgroudView.heightAnchor.constraint(equalToConstant: heightBackground)
         ])
-        
-//        self.layer?.backgroundColor = NSColor.red.cgColor
     }
     
     required init?(coder: NSCoder) {
