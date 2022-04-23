@@ -121,9 +121,11 @@ internal class ColorWheelView: NSView {
         if !indicator.isCenter  {
             color = hueSaturationAtPoint(CGPoint(x: point2.x*scale, y: point2.y*scale))
         }
+        
+        delegate?.hue = color.hue
+        delegate?.saturation = color.saturation
+            
         if isContinuous {
-            delegate?.hue = color.hue
-            delegate?.saturation = color.saturation
             delegate?.callDelegate()
         }
     }
