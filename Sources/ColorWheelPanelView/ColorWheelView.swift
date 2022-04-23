@@ -1,14 +1,37 @@
 //
-//  File.swift
-//  
+//  ColorWheelView.swift
+//  ColorWheelPanelView
 //
-//  Created by Yuichi Yoshida on 2022/04/21.
+//  Created by Yuichi Yoshida on 2022/04/20.
+//
+//  MIT License
+//
+//  Permission is hereby granted, free of charge, to any person obtaining a copy
+//  of this software and associated documentation files (the "Software"), to deal
+//  in the Software without restriction, including without limitation the rights
+//  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+//  copies of the Software, and to permit persons to whom the Software is
+//  furnished to do so, subject to the following conditions:
+//
+//  The above copyright notice and this permission notice shall be included in all
+//  copies or substantial portions of the Software.
+//
+//  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+//  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+//  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+//  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+//  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+//  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+//  SOFTWARE.
 //
 
 import Cocoa
 
 internal protocol ColorWheelViewDelegate {
-    func didUpdateColor(hue: CGFloat, saturation: CGFloat)
+    var hue: Double { set get}
+    var saturation: Double { set get}
+    var brightness: Double { set get}
+    func callDelegate()
 }
 
 internal class ColorWheelView: NSView {
@@ -22,37 +45,16 @@ internal class ColorWheelView: NSView {
     
     let scope = NSImageView(image: NSImage(systemSymbolName: "scope", accessibilityDescription: nil)!)
     
-    func updateColorWheel() {
+    func updateContents(hue: Double, saturation: Double, brightness: Double) {
         if wheelLayer.frame.size.width > 0 {
-            wheelLayer.contents = createColorWheel(wheelLayer.frame.size)
+            wheelLayer.contents = createColorWheel(wheelLayer.frame.size, brightness: brightness)
         }
-    }
-    
-    func updateScopePosition() {
         let radius = wheelLayer.frame.width / 2
         let x = cos(hue * Double.pi * 2) * saturation * radius + radius
         let y = sin(hue * Double.pi * 2) * saturation * radius + radius
         var rect = self.scope.frame
         rect.origin = CGPoint(x: x - rect.size.width/2, y: y - rect.size.height/2)
         self.scope.frame = rect
-    }
-    
-    var brightness = CGFloat(1) {
-        didSet {
-            updateColorWheel()
-        }
-    }
-    
-    var hue = CGFloat(0) {
-        didSet {
-            updateScopePosition()
-        }
-    }
-    
-    var saturation = CGFloat(0) {
-        didSet {
-            updateScopePosition()
-        }
     }
     
     let scale: CGFloat = NSScreen.main!.backingScaleFactor
@@ -66,7 +68,6 @@ internal class ColorWheelView: NSView {
         self.layer?.addSublayer(wheelLayer)
         self.layer?.addSublayer(borderLayer)
         self.addSubview(scope)
-//        self.layer?.backgroundColor = NSColor.green.cgColor
     }
     
     override func layout() {
@@ -76,8 +77,6 @@ internal class ColorWheelView: NSView {
         borderLayer.strokeColor = CGColor.init(gray: 0.4, alpha: 1.0)
         borderLayer.lineWidth = 1
         wheelLayer.frame = CGRect(x: 0, y: 0, width: self.frame.width, height: self.frame.height)
-        updateColorWheel()
-        updateScopePosition()
     }
     
     override var acceptsFirstResponder: Bool {
@@ -115,22 +114,17 @@ internal class ColorWheelView: NSView {
     }
     
     func update(event: NSEvent, isContinuous: Bool = false) {
-    
         let point = self.convert(event.locationInWindow, from: event.window?.contentView)
-        print(point)
         let indicator = getIndicatorCoordinate(point)
         let point2 = indicator.point
         var color = (hue: CGFloat(0), saturation: CGFloat(0))
         if !indicator.isCenter  {
             color = hueSaturationAtPoint(CGPoint(x: point2.x*scale, y: point2.y*scale))
         }
-        print(color)
-        
-        self.hue = color.hue
-        self.saturation = color.saturation
-        
         if isContinuous {
-            delegate?.didUpdateColor(hue: color.hue, saturation: color.saturation)
+            delegate?.hue = color.hue
+            delegate?.saturation = color.saturation
+            delegate?.callDelegate()
         }
     }
     
@@ -146,9 +140,8 @@ internal class ColorWheelView: NSView {
         update(event: event, isContinuous: isContinuous)
     }
     
-    func createColorWheel(_ size: CGSize) -> CGImage {
-        
-        
+    func createColorWheel(_ size: CGSize, brightness: Double) -> CGImage {
+
         // Creates a bitmap of the Hue Saturation wheel
         let originalWidth: CGFloat = size.width
         let originalHeight: CGFloat = size.height
@@ -178,7 +171,7 @@ internal class ColorWheelView: NSView {
                     
                     hsv.hue = hue
                     hsv.saturation = saturation
-                    hsv.brightness = self.brightness
+                    hsv.brightness = brightness
                     hsv.alpha = a
                     rgb = hsv2rgb(hsv)
                 }

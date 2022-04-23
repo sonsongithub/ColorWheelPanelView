@@ -1,21 +1,39 @@
 //
-//  File.swift
-//  
+//  GraySliderPanelView.swift
+//  ColorWheelPanelView
 //
-//  Created by Yuichi Yoshida on 2022/04/21.
+//  Created by Yuichi Yoshida on 2022/04/20.
+//
+//  MIT License
+//
+//  Permission is hereby granted, free of charge, to any person obtaining a copy
+//  of this software and associated documentation files (the "Software"), to deal
+//  in the Software without restriction, including without limitation the rights
+//  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+//  copies of the Software, and to permit persons to whom the Software is
+//  furnished to do so, subject to the following conditions:
+//
+//  The above copyright notice and this permission notice shall be included in all
+//  copies or substantial portions of the Software.
+//
+//  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+//  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+//  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+//  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+//  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+//  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+//  SOFTWARE.
 //
 
 import Cocoa
 
 public protocol GraySliderPanelViewDelegate {
-    func didChange(brightness: CGFloat)
+    func didChangeColor(brightness: Double)
 }
 
 public class GraySliderPanelView: NSView {
     
     public var delegate: GraySliderPanelViewDelegate?
-    
-    let margin = CGFloat(8)
     
     private let brightnessSlider: NSSlider = NSSlider(frame: .zero)
     private let sliderBackgroudView = SliderBackgroundView(frame: .zero)
@@ -24,7 +42,7 @@ public class GraySliderPanelView: NSView {
         didSet {
             brightnessSlider.floatValue = 1.0 - Float(brightness)
             if let delegate = delegate {
-                delegate.didChange(brightness: brightness)
+                delegate.didChangeColor(brightness: brightness)
             }
         }
     }
@@ -35,7 +53,7 @@ public class GraySliderPanelView: NSView {
         }
     }
     
-    @IBAction func didchange(sender: NSSlider) {
+    @IBAction private func didBrightnessSliderChange(sender: NSSlider) {
         self.brightness = 1 - CGFloat(sender.floatValue)
     }
         
@@ -45,7 +63,7 @@ public class GraySliderPanelView: NSView {
         brightnessSlider.cell = BrightnessSliderCell()
         
         brightnessSlider.target = self
-        brightnessSlider.action = #selector(self.didchange(sender:))
+        brightnessSlider.action = #selector(self.didBrightnessSliderChange(sender:))
         
         self.addSubview(sliderBackgroudView)
         self.addSubview(brightnessSlider)

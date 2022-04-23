@@ -4,6 +4,26 @@
 //
 //  Created by Yuichi Yoshida on 2022/04/20.
 //
+//  MIT License
+//
+//  Permission is hereby granted, free of charge, to any person obtaining a copy
+//  of this software and associated documentation files (the "Software"), to deal
+//  in the Software without restriction, including without limitation the rights
+//  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+//  copies of the Software, and to permit persons to whom the Software is
+//  furnished to do so, subject to the following conditions:
+//
+//  The above copyright notice and this permission notice shall be included in all
+//  copies or substantial portions of the Software.
+//
+//  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+//  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+//  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+//  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+//  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+//  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+//  SOFTWARE.
+//
 
 import Cocoa
 import ColorWheelPanelView
@@ -22,10 +42,10 @@ class ColorViewController: NSViewController, ColorWheelPanelViewDelegate {
         colorWheelPanelView?.isContinuous = (sender.state == .on)
     }
     
-    func didChange(hue: Float, saturation: Float, brightness: Float) {
-        hueSlider?.floatValue = hue
-        saturationSlider?.floatValue = saturation
-        brightnessSlider?.floatValue = 1.0 - brightness
+    func didChangeColor(hue: Double, saturation: Double, brightness: Double) {
+        hueSlider?.floatValue = Float(hue)
+        saturationSlider?.floatValue = Float(saturation)
+        brightnessSlider?.floatValue = Float(1.0 - brightness)
     }
     
     @IBAction func brightnessSlider(sender: NSSlider) {
@@ -71,6 +91,10 @@ class ColorViewController: NSViewController, ColorWheelPanelViewDelegate {
                 v.heightAnchor.constraint(equalToConstant: 220),
             ])
         }
+        
+        v.hue = 0
+        v.saturation = 1.0
+        v.brightness = 1.0
     }
 
     override var representedObject: Any? {
