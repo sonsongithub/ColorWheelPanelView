@@ -25,6 +25,8 @@
 //  SOFTWARE.
 //
 
+#if os(macOS)
+
 import Cocoa
 
 public protocol GraySliderPanelViewDelegate {
@@ -104,3 +106,5 @@ public class GraySliderPanelView: NSView {
         fatalError("init(coder:) has not been implemented")
     }
 }
+
+#endif

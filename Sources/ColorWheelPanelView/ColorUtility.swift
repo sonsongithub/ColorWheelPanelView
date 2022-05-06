@@ -25,6 +25,8 @@
 //  SOFTWARE.
 //
 
+#if os(macOS)
+
 import Cocoa
 
 // Typealias for RGB color values
@@ -106,3 +108,5 @@ internal func rgb2hsv(_ rgb: RGB) -> HSV {
     hsb.alpha = rgb.alpha
     return hsb
 }
+
+#endif

@@ -25,6 +25,8 @@
 //  SOFTWARE.
 //
 
+#if os(macOS)
+
 import Cocoa
 
 internal extension NSBezierPath {
@@ -62,3 +64,5 @@ internal extension NSBezierPath {
         return path
     }
 }
+
+#endif

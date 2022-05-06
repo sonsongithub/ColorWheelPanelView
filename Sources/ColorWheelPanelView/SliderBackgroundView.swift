@@ -25,6 +25,8 @@
 //  SOFTWARE.
 //
 
+#if os(macOS)
+
 import Cocoa
 
 internal class SliderBackgroundView: NSView {
@@ -60,3 +62,5 @@ internal class SliderBackgroundView: NSView {
         path.stroke()
     }
 }
+
+#endif

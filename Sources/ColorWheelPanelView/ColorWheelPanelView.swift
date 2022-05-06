@@ -25,6 +25,8 @@
 //  SOFTWARE.
 //
 
+#if os(macOS)
+
 import Cocoa
 
 public protocol ColorWheelPanelViewDelegate {
@@ -140,3 +142,5 @@ public class ColorWheelPanelView: NSView, ColorWheelViewDelegate {
         fatalError("init(coder:) has not been implemented")
     }
 }
+
+#endif

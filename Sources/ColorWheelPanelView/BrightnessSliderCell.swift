@@ -25,6 +25,8 @@
 //  SOFTWARE.
 //
 
+#if os(macOS)
+
 import Cocoa
 
 internal class BrightnessSliderCell: NSSliderCell {
@@ -48,3 +50,5 @@ internal class BrightnessSliderCell: NSSliderCell {
         // nothing to be drawn
     }
 }
+
+#endif

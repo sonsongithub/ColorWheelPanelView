@@ -25,6 +25,8 @@
 //  SOFTWARE.
 //
 
+#if os(macOS)
+
 import Cocoa
 
 internal protocol ColorWheelViewDelegate {
@@ -220,3 +222,5 @@ internal class ColorWheelView: NSView {
     }
     
 }
+
+#endif
