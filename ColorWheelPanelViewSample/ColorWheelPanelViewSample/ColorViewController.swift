@@ -102,5 +102,9 @@ class ColorViewController: NSViewController, ColorWheelPanelViewDelegate {
         // Update the view, if already loaded.
         }
     }
+    deinit {
+        print(Self.Type.self)
+        print(#function)
+    }
 }
 

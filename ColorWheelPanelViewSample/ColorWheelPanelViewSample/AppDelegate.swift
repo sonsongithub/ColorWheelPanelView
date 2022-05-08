@@ -30,11 +30,15 @@ import Cocoa
 @main
 class AppDelegate: NSObject, NSApplicationDelegate {
 
-    
-
-
     func applicationDidFinishLaunching(_ aNotification: Notification) {
         // Insert code here to initialize your application
+        
+        let storyboard = NSStoryboard(name: "Main", bundle: nil)
+        if let modalSheetWindowController = storyboard.instantiateController(withIdentifier: "ModalSheetWindowController") as? NSWindowController {
+            print(modalSheetWindowController)
+            modalSheetWindowController.showWindow(self)
+            NSApp.activate(ignoringOtherApps: true)
+        }
     }
 
     func applicationWillTerminate(_ aNotification: Notification) {

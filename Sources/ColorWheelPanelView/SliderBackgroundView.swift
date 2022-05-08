@@ -61,6 +61,12 @@ internal class SliderBackgroundView: NSView {
         path.lineWidth = 2
         path.stroke()
     }
+#if MEMORY_DEBUG
+    deinit {
+        print(Self.Type.self)
+        print(#function)
+    }
+#endif
 }
 
 #endif

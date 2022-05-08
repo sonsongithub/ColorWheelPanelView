@@ -29,12 +29,12 @@
 
 import Cocoa
 
-public protocol ColorWheelPanelViewDelegate {
+public protocol ColorWheelPanelViewDelegate: AnyObject {
     func didChangeColor(hue: Double, saturation: Double, brightness: Double)
 }
 
 public class ColorWheelPanelView: NSView, ColorWheelViewDelegate {
-    public var delegate: ColorWheelPanelViewDelegate?
+    public weak var delegate: ColorWheelPanelViewDelegate?
     private let brightnessSlider: NSSlider = NSSlider(frame: .zero)
     private let colorWheelView = ColorWheelView(frame: .zero)
     private let sliderBackgroudView = SliderBackgroundView(frame: .zero)
@@ -141,6 +141,12 @@ public class ColorWheelPanelView: NSView, ColorWheelViewDelegate {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+#if MEMORY_DEBUG
+    deinit {
+        print(Self.Type.self)
+        print(#function)
+    }
+#endif
 }
 
 #endif

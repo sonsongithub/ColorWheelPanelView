@@ -29,7 +29,7 @@
 
 import Cocoa
 
-internal protocol ColorWheelViewDelegate {
+internal protocol ColorWheelViewDelegate: AnyObject {
     var hue: Double { set get}
     var saturation: Double { set get}
     var brightness: Double { set get}
@@ -37,7 +37,7 @@ internal protocol ColorWheelViewDelegate {
 }
 
 internal class ColorWheelView: NSView {
-    var delegate: ColorWheelViewDelegate?
+    weak var delegate: ColorWheelViewDelegate?
     
     let wheelLayer = CALayer()
     let borderLayer = CAShapeLayer()
@@ -221,6 +221,12 @@ internal class ColorWheelView: NSView {
         fatalError("init(coder:) has not been implemented")
     }
     
+#if MEMORY_DEBUG
+    deinit {
+        print(Self.Type.self)
+        print(#function)
+    }
+#endif
 }
 
 #endif

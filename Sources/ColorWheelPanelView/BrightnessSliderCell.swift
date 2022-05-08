@@ -49,6 +49,12 @@ internal class BrightnessSliderCell: NSSliderCell {
     override func drawBar(inside rect: NSRect, flipped: Bool) {
         // nothing to be drawn
     }
+#if MEMORY_DEBUG
+    deinit {
+        print(Self.Type.self)
+        print(#function)
+    }
+#endif
 }
 
 #endif

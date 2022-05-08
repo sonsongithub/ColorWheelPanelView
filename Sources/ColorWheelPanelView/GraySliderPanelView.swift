@@ -29,13 +29,13 @@
 
 import Cocoa
 
-public protocol GraySliderPanelViewDelegate {
+public protocol GraySliderPanelViewDelegate: AnyObject {
     func didChangeColor(brightness: Double)
 }
 
 public class GraySliderPanelView: NSView {
     
-    public var delegate: GraySliderPanelViewDelegate?
+    public weak var delegate: GraySliderPanelViewDelegate?
     
     private let brightnessSlider: NSSlider = NSSlider(frame: .zero)
     private let sliderBackgroudView = SliderBackgroundView(frame: .zero)
@@ -105,6 +105,12 @@ public class GraySliderPanelView: NSView {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+#if MEMORY_DEBUG
+    deinit {
+        print(Self.Type.self)
+        print(#function)
+    }
+#endif
 }
 
 #endif
