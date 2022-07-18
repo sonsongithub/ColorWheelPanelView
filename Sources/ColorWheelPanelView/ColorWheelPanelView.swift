@@ -39,6 +39,8 @@ public class ColorWheelPanelView: NSView, ColorWheelViewDelegate {
     private let colorWheelView = ColorWheelView(frame: .zero)
     private let sliderBackgroudView = SliderBackgroundView(frame: .zero)
     
+    private var lockForBinding = false
+    
     // properties
     public var isContinuous = false {
         didSet {
@@ -49,22 +51,28 @@ public class ColorWheelPanelView: NSView, ColorWheelViewDelegate {
     
     public var hue: Double = 0 {
         didSet {
-            sliderBackgroudView.hue = hue
-            colorWheelView.updateContents(hue: hue, saturation: saturation, brightness: brightness)
+            if !lockForBinding {
+                sliderBackgroudView.hue = hue
+                colorWheelView.updateContents(hue: hue, saturation: saturation, brightness: brightness)
+            }
         }
     }
     
     public var saturation: Double = 0 {
         didSet {
-            sliderBackgroudView.saturation = saturation
-            colorWheelView.updateContents(hue: hue, saturation: saturation, brightness: brightness)
+            if !lockForBinding {
+                sliderBackgroudView.saturation = saturation
+                colorWheelView.updateContents(hue: hue, saturation: saturation, brightness: brightness)
+            }
         }
     }
     
     public var brightness: Double = 1.0 {
         didSet {
-            colorWheelView.updateContents(hue: hue, saturation: saturation, brightness: brightness)
-            brightnessSlider.doubleValue = 1.0 - brightness
+            if !lockForBinding {
+                colorWheelView.updateContents(hue: hue, saturation: saturation, brightness: brightness)
+                brightnessSlider.doubleValue = 1.0 - brightness
+            }
         }
     }
     
@@ -75,7 +83,9 @@ public class ColorWheelPanelView: NSView, ColorWheelViewDelegate {
     
     internal func callDelegate() {
         if let delegate = delegate {
+            lockForBinding = true
             delegate.didChangeColor(hue: hue, saturation: saturation, brightness: brightness)
+            lockForBinding = false
         }
     }
     
@@ -136,6 +146,10 @@ public class ColorWheelPanelView: NSView, ColorWheelViewDelegate {
             sliderBackgroudView.widthAnchor.constraint(equalToConstant: sliderWidth - horizontalLeading),
             sliderBackgroudView.heightAnchor.constraint(equalToConstant: heightBackground)
         ])
+    }
+    
+    public override var intrinsicContentSize: CGSize {
+        return CGSize(width: 300, height: 220)
     }
     
     required init?(coder: NSCoder) {

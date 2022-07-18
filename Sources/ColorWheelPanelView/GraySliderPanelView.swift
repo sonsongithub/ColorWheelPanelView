@@ -39,12 +39,15 @@ public class GraySliderPanelView: NSView {
     
     private let brightnessSlider: NSSlider = NSSlider(frame: .zero)
     private let sliderBackgroudView = SliderBackgroundView(frame: .zero)
+    private var lockForBinding = false
     
     public var brightness: CGFloat = 0 {
         didSet {
             brightnessSlider.floatValue = 1.0 - Float(brightness)
             if let delegate = delegate {
+                lockForBinding = true
                 delegate.didChangeColor(brightness: brightness)
+                lockForBinding = false
             }
         }
     }
@@ -98,8 +101,10 @@ public class GraySliderPanelView: NSView {
             sliderBackgroudView.widthAnchor.constraint(equalToConstant: sliderWidth - horizontalLeading),
             sliderBackgroudView.heightAnchor.constraint(equalToConstant: heightBackground)
         ])
-
-//        self.layer?.backgroundColor = NSColor.red.cgColor
+    }
+    
+    public override var intrinsicContentSize: CGSize {
+        return CGSize(width: 300, height: 50)
     }
     
     required init?(coder: NSCoder) {
